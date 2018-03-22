@@ -15,8 +15,8 @@ const int inlierCnt = 400;
 const int outlierCnt = COUNT - inlierCnt;
 Point2D points[COUNT];
 
-double rN = 5;
-double rH = 2.5;
+double rN = 50;
+double rH = 25;
 double binsize = 0.1;
 #define M_PI  3.14159265358979323846   // pi
 double minsize = -M_PI;
@@ -24,13 +24,42 @@ double maxsize = M_PI;
 
 using namespace std;
 
+void initialData()
+{
+    srand((unsigned int)time(0));
+
+    float a = rand() % 100 / 5.0;
+    float b = rand() % 100 / 5.0;
+    printf("Line: (%f, %f)\n", a, b);
+
+    //inliers
+    for (int i = 0; i < inlierCnt; i++)
+    {
+        points[i].x = i;
+        points[i].y = i * a + b + rand() % 100 / 1024.0;
+    }
+
+    //outliers
+    for (int i = inlierCnt; i < COUNT; i++)
+    {
+        points[i].x = 20 + rand() % 100;
+        points[i].y = 30 + rand() % 100;
+    }
+}
+
 void runFPFH()
 {
     PointCloud cloud;
 
-    Point* pts = new Point(1, 0.1, 0.2, 0.3);
+    for (int i = 0; i < COUNT; ++i)
+    {
+        float z = 1;
+        if (i % 100 == 0)
+            z = rand() % 100;
 
-    cloud.addPoint(pts);
+        Point* pts = new Point(i, points[i].x, points[i].y, z);
+        cloud.addPoint(pts);
+    }
 
     //build kd-tree from cloud
     KdTreeNode root;
@@ -101,26 +130,6 @@ void runFPFH()
 
 void runRansac()
 {
-    srand((unsigned int)time(0));
-
-    float a = rand() % 100 / 5.0;
-    float b = rand() % 100 / 5.0;
-    printf("Line: (%f, %f)\n", a, b);
-
-    //inliers
-    for (int i = 0; i < inlierCnt; i++)
-    {
-        points[i].x = i;
-        points[i].y = i * a + b + rand() % 100 / 1024.0;
-    }
-
-    //outliers
-    for (int i = inlierCnt; i < COUNT; i++)
-    {
-        points[i].x = 20 + rand() % 100;
-        points[i].y = 30 + rand() % 100;
-    }
-
     Line line;
     //least square fit with only inliers
     FitLine::FitLine2D(points, inlierCnt, NULL, line);
@@ -142,6 +151,8 @@ void runRansac()
 
 int main()
 {
+    initialData();
+
     runFPFH();
 
     runRansac();
