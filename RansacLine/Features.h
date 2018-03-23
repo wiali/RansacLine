@@ -13,29 +13,33 @@ class Point;
  *  \author mack
  */
 
-class Features {
-	double alpha;
-	double phi;
-	double theta;
+class Features
+{
+    double alpha;
+    double phi;
+    double theta;
 
-	//compute alpha, phi and theta features for the two points given
-	void computeFeatures(Point*, Point*);
+    //compute alpha, phi and theta features for the two points given
+    void computeFeatures(Point*, Point*);
 
 public:
-	Features(Point*, Point*);
-	virtual ~Features();
+    Features(Point*, Point*);
+    virtual ~Features();
 
-	double getAlpha(){
-		return alpha;
-	}
+    double getAlpha()
+    {
+        return alpha;
+    }
 
-	double getPhi() {
-		return phi;
-	}
+    double getPhi()
+    {
+        return phi;
+    }
 
-	double getTheta() {
-		return theta;
-	}
+    double getTheta()
+    {
+        return theta;
+    }
 };
 
 #endif /* SRC_FEATURES_FEATURES_H_ */

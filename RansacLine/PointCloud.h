@@ -11,34 +11,37 @@
  *  \author mack
  */
 
-class PointCloud {
-	std::vector<Point*> points;
-	unsigned int size;
+class PointCloud
+{
+    std::vector<Point*> points;
+    unsigned int size;
 
 public:
-	PointCloud();
-	PointCloud(std::vector<Point*>);
+    PointCloud();
+    PointCloud(std::vector<Point*>);
 
-	virtual ~PointCloud();
+    virtual ~PointCloud();
 
-	std::vector<Point*> getPoints() const;
+    std::vector<Point*> getPoints() const;
 
-	unsigned int getSize() const;
+    unsigned int getSize() const;
 
-	Point* getCentroid() const;
-	//add point to point cloud
-	void addPoint(Point*);
+    Point* getCentroid() const;
+    //add point to point cloud
+    void addPoint(Point*);
 
-	void clear();
+    void clear();
 
-	friend std::ostream& operator<<(std::ostream& out, const PointCloud& p) {
-		out.width(4);
-		out.precision(3);
-		for (unsigned int i = 0; i < p.getSize(); i++) {
-			out << *p.getPoints()[i];
-		}
-		return out;
-	}
+    friend std::ostream& operator<<(std::ostream& out, const PointCloud& p)
+    {
+        out.width(4);
+        out.precision(3);
+        for (unsigned int i = 0; i < p.getSize(); i++)
+        {
+            out << *p.getPoints()[i];
+        }
+        return out;
+    }
 };
 
 #endif /* POINTCLOUD_H_ */

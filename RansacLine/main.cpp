@@ -48,7 +48,7 @@ void runFPFH()
     double rN = 50;
     double rH = 25;
     double binsize = 0.1;
-    #define M_PI  3.14159265358979323846   // pi
+#define M_PI  3.14159265358979323846   // pi
     double minsize = -M_PI;
     double maxsize = M_PI;
 
@@ -71,9 +71,11 @@ void runFPFH()
     //compute normals for all points with radius rN
     int count = 0;
     std::cout << "computing normals..." << std::endl;
-    for (unsigned int i = 0; i < cloud.getSize(); i++) {
+    for (unsigned int i = 0; i < cloud.getSize(); i++)
+    {
         count++;
-        if (count % 1000 == 0) {
+        if (count % 1000 == 0)
+        {
             std::cout << count << "..." << std::endl;
         }
         std::vector<Point*> neighbors;
@@ -84,17 +86,21 @@ void runFPFH()
     //compute SPFHs for all points with radius rH
     count = 0;
     std::cout << "computing SPFHs..." << std::endl;
-    for (unsigned int i = 0; i < cloud.getSize(); i++) {
+    for (unsigned int i = 0; i < cloud.getSize(); i++)
+    {
         count++;
-        if (count % 1000 == 0) {
+        if (count % 1000 == 0)
+        {
             std::cout << count << "..." << std::endl;
         }
         std::vector<Point*> neighbors;
         root.fixedRadiusSearch(cloud.getPoints()[i], rH, neighbors);
 
         SPFH* s = new SPFH(minsize, maxsize, binsize);
-        for (unsigned int j = 0; j < neighbors.size(); j++) {
-            if (cloud.getPoints()[i] == neighbors[j]) {
+        for (unsigned int j = 0; j < neighbors.size(); j++)
+        {
+            if (cloud.getPoints()[i] == neighbors[j])
+            {
                 continue;
             }
             Features* f = new Features(cloud.getPoints()[i], neighbors[j]);
@@ -107,9 +113,11 @@ void runFPFH()
     //compute SPFHs for all points with radius rH
     count = 0;
     std::cout << "computing FPFHs..." << std::endl;
-    for (unsigned int i = 0; i < cloud.getSize(); i++) {
+    for (unsigned int i = 0; i < cloud.getSize(); i++)
+    {
         count++;
-        if (count % 1000 == 0) {
+        if (count % 1000 == 0)
+        {
             std::cout << count << "..." << std::endl;
         }
         std::vector<Point*> neighbors;
@@ -118,13 +126,15 @@ void runFPFH()
         f->addToHistogram(
             cloud.getPoints()[i]->getSimplePointFeatureHistogram(), 1, 1);
 
-        for (unsigned int j = 0; j < neighbors.size(); j++) {
-            if (cloud.getPoints()[i] == neighbors[j]) {
+        for (unsigned int j = 0; j < neighbors.size(); j++)
+        {
+            if (cloud.getPoints()[i] == neighbors[j])
+            {
                 continue;
             }
             f->addToHistogram(neighbors[j]->getSimplePointFeatureHistogram(),
-                neighbors.size(),
-                cloud.getPoints()[i]->euclideanDistance(neighbors[j]));
+                              neighbors.size(),
+                              cloud.getPoints()[i]->euclideanDistance(neighbors[j]));
         }
         cloud.getPoints()[i]->setFastPointFeatureHistogram(f);
 
@@ -165,5 +175,5 @@ int main()
 
     getchar();
 
-	return 0;
+    return 0;
 }

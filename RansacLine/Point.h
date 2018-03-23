@@ -17,90 +17,104 @@ class FPFH;
  *
  *  \author mack
  */
-enum AXIS {X=0,Y=1,Z=2};
-class Point {
-	Eigen::Vector3f coordinates;
-	Eigen::Vector3f normal;
-	int label;
-	double eigenValue;
-	SPFH* simpleHistogram;
-	FPFH* fastHistogram;
+enum AXIS {X = 0, Y = 1, Z = 2};
+class Point
+{
+    Eigen::Vector3f coordinates;
+    Eigen::Vector3f normal;
+    int label;
+    double eigenValue;
+    SPFH* simpleHistogram;
+    FPFH* fastHistogram;
 
 public:
-	Point();
-	Point(int, double*);
-	Point(int, double, double, double);
-	Point(Point& rhs);
-	virtual ~Point();
+    Point();
+    Point(int, double*);
+    Point(int, double, double, double);
+    Point(Point& rhs);
+    virtual ~Point();
 
-	float getX() const {
-		return coordinates[0];
-	}
-	float getY() const {
-		return coordinates[1];
-	}
-	float getZ() const {
-		return coordinates[2];
-	}
-	float getAxisVal(int axis) const
-	{
-		return coordinates[axis];
-	}
-	Eigen::Vector3f getNormal() const {
-		return normal;
-	}
+    float getX() const
+    {
+        return coordinates[0];
+    }
+    float getY() const
+    {
+        return coordinates[1];
+    }
+    float getZ() const
+    {
+        return coordinates[2];
+    }
+    float getAxisVal(int axis) const
+    {
+        return coordinates[axis];
+    }
+    Eigen::Vector3f getNormal() const
+    {
+        return normal;
+    }
 
-	double getEigenValue() const {
-		return eigenValue;
-	}
+    double getEigenValue() const
+    {
+        return eigenValue;
+    }
 
-	Eigen::Vector3f getCoordinates() const {
-		return coordinates;
-	}
+    Eigen::Vector3f getCoordinates() const
+    {
+        return coordinates;
+    }
 
-	int getLabel() const {
-		return label;
-	}
+    int getLabel() const
+    {
+        return label;
+    }
 
-	void setLabel(int l) {
-		label = l;
-	}
+    void setLabel(int l)
+    {
+        label = l;
+    }
 
-	SPFH* getSimplePointFeatureHistogram() const {
-		return simpleHistogram;
-	}
+    SPFH* getSimplePointFeatureHistogram() const
+    {
+        return simpleHistogram;
+    }
 
-	void setSimplePointFeatureHistogram(SPFH* simpleHistogram) {
-		this->simpleHistogram = simpleHistogram;
-	}
+    void setSimplePointFeatureHistogram(SPFH* simpleHistogram)
+    {
+        this->simpleHistogram = simpleHistogram;
+    }
 
-	FPFH* getFastPointFeatureHistogram() const {
-		return fastHistogram;
-	}
+    FPFH* getFastPointFeatureHistogram() const
+    {
+        return fastHistogram;
+    }
 
-	void setFastPointFeatureHistogram(FPFH* fastHistogram) {
-		this->fastHistogram = fastHistogram;
-	}
+    void setFastPointFeatureHistogram(FPFH* fastHistogram)
+    {
+        this->fastHistogram = fastHistogram;
+    }
 
-	//compute normal for the point from a given set of neighbors
-	void computeNormal(std::vector<Point*>);
+    //compute normal for the point from a given set of neighbors
+    void computeNormal(std::vector<Point*>);
 
-	//compute euclidean distance between this and the specified point
-	double euclideanDistance(Point*);
+    //compute euclidean distance between this and the specified point
+    double euclideanDistance(Point*);
 
-	Point& operator =(const Point&);
+    Point& operator =(const Point&);
 
-	bool operator ==(const Point&);
+    bool operator ==(const Point&);
 
-	bool operator !=(const Point&);
+    bool operator !=(const Point&);
 
-	friend std::ostream& operator<<(std::ostream& out, const Point& p) {
-		out.width(4);
-		out.precision(3);
-		out << p.coordinates[0] << ", " << p.coordinates[1] << ", "
-				<< p.coordinates[2];
-		return out;
-	}
+    friend std::ostream& operator<<(std::ostream& out, const Point& p)
+    {
+        out.width(4);
+        out.precision(3);
+        out << p.coordinates[0] << ", " << p.coordinates[1] << ", "
+            << p.coordinates[2];
+        return out;
+    }
 };
 
 #endif /* POINT_H_ */

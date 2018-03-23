@@ -11,18 +11,18 @@ int FitLine::FitLine2D(const Point2D* pPoints, int nCount, float* pWeights, Line
     float   sumxy = 0.0;                     /* sum of x * y */
     float   sumy = 0.0;                      /* sum of y     */
     float   sumy2 = 0.0;                     /* sum of y**2  */
-    
+
     for (int i = 0; i < nCount; i++)
     {
         sumx += (pWeights ? pWeights[i] : 1) * pPoints[i].x;
-        sumx2 += (pWeights ? pWeights[i] : 1) *sqr(pPoints[i].x);
-        sumxy += (pWeights ? pWeights[i] : 1) *pPoints[i].x * pPoints[i].y;
-        sumy += (pWeights ? pWeights[i] : 1) *pPoints[i].y;
-        sumy2 += (pWeights ? pWeights[i] : 1) *sqr(pPoints[i].y);
+        sumx2 += (pWeights ? pWeights[i] : 1) * sqr(pPoints[i].x);
+        sumxy += (pWeights ? pWeights[i] : 1) * pPoints[i].x * pPoints[i].y;
+        sumy += (pWeights ? pWeights[i] : 1) * pPoints[i].y;
+        sumy2 += (pWeights ? pWeights[i] : 1) * sqr(pPoints[i].y);
     }
 
     float denom = (nCount * sumx2 - sqr(sumx));
-    if (denom == 0) 
+    if (denom == 0)
     {
         // singular matrix. can't solve the problem.
         line.a = 0;
@@ -35,8 +35,8 @@ int FitLine::FitLine2D(const Point2D* pPoints, int nCount, float* pWeights, Line
     line.b = (sumy * sumx2 - sumx * sumxy) / denom;
     /* compute correlation coeff */
     line.r = (sumxy - sumx * sumy / nCount) /
-                sqrt((sumx2 - sqr(sumx) / nCount) *
-                (sumy2 - sqr(sumy) / nCount));
+             sqrt((sumx2 - sqr(sumx) / nCount) *
+                  (sumy2 - sqr(sumy) / nCount));
 
     return 0;
 }
@@ -51,33 +51,33 @@ double FitLine::CalcDist2D( Point2D* points, int count, Line& line, float* dist)
         float x = points[j].x;
         float y = points[j].y;
 
-        dist[j] = (float) fabs( -line.a * x + y - line.b ) / sqrt(1+ sqr(line.a));
+        dist[j] = (float) fabs( -line.a * x + y - line.b ) / sqrt(1 + sqr(line.a));
         sum_dist += dist[j];
     }
 
     return sum_dist;
 }
 
-int FitLine::FitLine2D(Point2D * points, int count, Line& line)
+int FitLine::FitLine2D(Point2D* points, int count, Line& line)
 {
-	//first no weight to least square a initial line.
-	FitLine2D(points, count, NULL, line);
-	//least square with weight.
-	float* dist = new float[count];
-	float* weight = new float[count];
-	
-	for(int i = 0; i < 5; i++)
-	{
-		CalcDist2D(points, count, line, dist);
-	 	WeightL1( dist, count, weight);
-		FitLine2D(points, count, weight, line);
-	}
-	delete [] dist;
+    //first no weight to least square a initial line.
+    FitLine2D(points, count, NULL, line);
+    //least square with weight.
+    float* dist = new float[count];
+    float* weight = new float[count];
+
+    for(int i = 0; i < 5; i++)
+    {
+        CalcDist2D(points, count, line, dist);
+        WeightL1( dist, count, weight);
+        FitLine2D(points, count, weight, line);
+    }
+    delete [] dist;
 
     return 0;
 }
 
-void FitLine::WeightL1( float *d, int count, float *w )
+void FitLine::WeightL1( float* d, int count, float* w )
 {
     int i;
 
@@ -88,7 +88,7 @@ void FitLine::WeightL1( float *d, int count, float *w )
     }
 }
 
-void FitLine::WeightL12( float *d, int count, float *w )
+void FitLine::WeightL12( float* d, int count, float* w )
 {
     int i;
 
@@ -99,7 +99,7 @@ void FitLine::WeightL12( float *d, int count, float *w )
 }
 
 
-void FitLine::WeightHuber( float *d, int count, float *w, float _c )
+void FitLine::WeightHuber( float* d, int count, float* w, float _c )
 {
     int i;
     const float c = _c <= 0 ? 1.345f : _c;
@@ -109,12 +109,12 @@ void FitLine::WeightHuber( float *d, int count, float *w, float _c )
         if( d[i] < c )
             w[i] = 1.0f;
         else
-            w[i] = c/d[i];
+            w[i] = c / d[i];
     }
 }
 
 
-void FitLine::WeightFair( float *d, int count, float *w, float _c )
+void FitLine::WeightFair( float* d, int count, float* w, float _c )
 {
     int i;
     const float c = _c == 0 ? 1 / 1.3998f : 1 / _c;
@@ -125,7 +125,7 @@ void FitLine::WeightFair( float *d, int count, float *w, float _c )
     }
 }
 
-void FitLine::WeightWelsch( float *d, int count, float *w, float _c )
+void FitLine::WeightWelsch( float* d, int count, float* w, float _c )
 {
     int i;
     const float c = _c == 0 ? 1 / 2.9846f : 1 / _c;

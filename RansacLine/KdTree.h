@@ -12,52 +12,56 @@
  *  \author mack
  */
 
-class KdTreeNode {
-	int depth;
-	std::vector<Point*> successors;
+class KdTreeNode
+{
+    int depth;
+    std::vector<Point*> successors;
 
-	void MergeSort(int axis, std::vector<Point*>&, int);
-	std::vector<Point*> subset(std::vector<Point*>, int, int);
-	static bool PointInSphere(Point* p, double radius,Point* center);
-	bool IsAllPointsInSphere(double radius,Point* center);
-	bool IntersectSphere(double radius,Point* center);
+    void MergeSort(int axis, std::vector<Point*>&, int);
+    std::vector<Point*> subset(std::vector<Point*>, int, int);
+    static bool PointInSphere(Point* p, double radius, Point* center);
+    bool IsAllPointsInSphere(double radius, Point* center);
+    bool IntersectSphere(double radius, Point* center);
 public:
-	Point* location;
-	KdTreeNode* right_node;
-	KdTreeNode* left_node;
+    Point* location;
+    KdTreeNode* right_node;
+    KdTreeNode* left_node;
 
-	KdTreeNode();
-	virtual ~KdTreeNode();
+    KdTreeNode();
+    virtual ~KdTreeNode();
 
-	int getDepth() const;
-	std::vector<Point*> getSuccessors() const;
+    int getDepth() const;
+    std::vector<Point*> getSuccessors() const;
 
-	//build a kd-tree from a point set, initial call with depth = 0
-	void buildTree(std::vector<Point*> points, int depth);
+    //build a kd-tree from a point set, initial call with depth = 0
+    void buildTree(std::vector<Point*> points, int depth);
 
-	//execute fixed radius search around a given point p in radius k, stores neighbors in result set
-	void fixedRadiusSearch(Point* p, double k, std::vector<Point*>& neighbors);
+    //execute fixed radius search around a given point p in radius k, stores neighbors in result set
+    void fixedRadiusSearch(Point* p, double k, std::vector<Point*>& neighbors);
 
-	friend std::ostream& operator<<(std::ostream& out, const KdTreeNode& k) {
-		out.width(4);
-		out.precision(3);
+    friend std::ostream& operator<<(std::ostream& out, const KdTreeNode& k)
+    {
+        out.width(4);
+        out.precision(3);
 
-		if (k.location == NULL)
-			return out;
-		out << *k.location << "\n";
+        if (k.location == NULL)
+            return out;
+        out << *k.location << "\n";
 
-		if (k.right_node != NULL) {
-			out << "depth: " << k.getDepth() + 1 << " right tree: \n";
-			out << *(k.right_node) << "\n";
-		}
+        if (k.right_node != NULL)
+        {
+            out << "depth: " << k.getDepth() + 1 << " right tree: \n";
+            out << *(k.right_node) << "\n";
+        }
 
-		if (k.left_node != NULL) {
-			out << "depth: " << k.getDepth() + 1 << " left tree: \n";
-			out << *(k.left_node) << "\n";
-		}
+        if (k.left_node != NULL)
+        {
+            out << "depth: " << k.getDepth() + 1 << " left tree: \n";
+            out << *(k.left_node) << "\n";
+        }
 
-		return out;
-	}
+        return out;
+    }
 };
 
 #endif /* KDTREE_H_ */

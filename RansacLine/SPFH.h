@@ -15,18 +15,20 @@ class Features;
  *  \author mack
  */
 
-class SPFH : public Histogram{
+class SPFH : public Histogram
+{
 public:
-	SPFH(double, double, double);
-	virtual ~SPFH();
+    SPFH(double, double, double);
+    virtual ~SPFH();
 
-	//add alpha, phi, theta feature to the SPFH
-	void addToHistogram(Features*);
+    //add alpha, phi, theta feature to the SPFH
+    void addToHistogram(Features*);
 
-	friend std::ostream& operator<<(std::ostream& out, const SPFH& h){
-		h.serialize(out);
-		return out;
-	}
+    friend std::ostream& operator<<(std::ostream& out, const SPFH& h)
+    {
+        h.serialize(out);
+        return out;
+    }
 };
 
 #endif /* SRC_HISTOGRAMS_SPFH_H_ */
