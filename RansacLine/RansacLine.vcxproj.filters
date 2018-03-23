@@ -57,6 +57,12 @@
     <ClInclude Include="PointCloud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="levmarq.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levmarq_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -90,6 +96,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PointCloud.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levmarq.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levmarq_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

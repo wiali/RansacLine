@@ -9,21 +9,16 @@
 
 #include "KdTree.h"
 #include "PointCloud.h"
+#include "levmarq_test.h"
 
 const int COUNT = 1000;
 const int inlierCnt = 400;
 const int outlierCnt = COUNT - inlierCnt;
 Point2D points[COUNT];
 
-double rN = 50;
-double rH = 25;
-double binsize = 0.1;
-#define M_PI  3.14159265358979323846   // pi
-double minsize = -M_PI;
-double maxsize = M_PI;
-
 using namespace std;
 
+//-----------------------------------------------------------------------------------------------------------
 void initialData()
 {
     srand((unsigned int)time(0));
@@ -47,8 +42,16 @@ void initialData()
     }
 }
 
+//-----------------------------------------------------------------------------------------------------------
 void runFPFH()
 {
+    double rN = 50;
+    double rH = 25;
+    double binsize = 0.1;
+    #define M_PI  3.14159265358979323846   // pi
+    double minsize = -M_PI;
+    double maxsize = M_PI;
+
     PointCloud cloud;
 
     for (int i = 0; i < COUNT; ++i)
@@ -128,6 +131,7 @@ void runFPFH()
     }
 }
 
+//-----------------------------------------------------------------------------------------------------------
 void runRansac()
 {
     Line line;
@@ -148,9 +152,11 @@ void runRansac()
 
 }
 
-
+//-----------------------------------------------------------------------------------------------------------
 int main()
 {
+    LevMarq_Test::run();
+
     initialData();
 
     runFPFH();

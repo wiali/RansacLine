@@ -151,6 +151,8 @@
     <ClInclude Include="FPFH.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="KdTree.h" />
+    <ClInclude Include="levmarq.h" />
+    <ClInclude Include="levmarq_test.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointCloud.h" />
     <ClInclude Include="ransac.h" />
@@ -166,6 +168,8 @@
     <ClCompile Include="FPFH.cpp" />
     <ClCompile Include="Histogram.cpp" />
     <ClCompile Include="KdTree.cpp" />
+    <ClCompile Include="levmarq.cpp" />
+    <ClCompile Include="levmarq_test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="PointCloud.cpp" />
